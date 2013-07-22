@@ -1,0 +1,18 @@
+.b-content
+	padding: 10px;
+	background: #dfdfdf;
+	text-align: center;
+	clearfix();
+
+	/* grunt-spritesmith sprites example */
+	&__social__item_facebook
+	&__social__item_github
+	&__social__item_twitter
+		display: inline-block;
+
+	&__social__item_facebook
+		sprite($facebook_sprite)
+	&__social__item_github
+		sprite($github_sprite)
+	&__social__item_twitter
+		sprite($twitter_sprite)

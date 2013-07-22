@@ -1,0 +1,77 @@
+!!!
+html(lang="ru")
+  block head
+    head
+      meta(charset="utf-8")
+      //- CHECKLIST: Remove if activated in .htaccess
+      meta(http-equiv="X-UA-Compatible", content="IE=edge,chrome=1")
+
+      //- CHECKLIST: Test on CMS Must be filled on all pages
+      block head.title
+        title Title
+
+      //- CHECKLIST: Test on CMS SEO stuff, need to be on every indexing page
+      meta(name="keywords",    content="{FIXME}")
+      meta(name="description", content="{FIXME}")
+      meta(name="viewport",    content="width=device-width")
+
+      //- CHECKLIST: Test on CMS Canonical url for a page to index in search engines, need to be on every indexing page
+      link(rel="canonical", href="{FIXME}")
+
+      block head.css
+        link(rel="stylesheet", href="publish/style.css")
+
+        //if lt IE 9
+          link(rel="stylesheet", href="publish/style.ie.css")
+      block head.js
+        //if lt IE 9
+          script(src="lib/html5shiv/html5shiv.js")
+
+    block body
+      body
+        block body.header
+        block body.content
+          .b-content
+            p somecontent
+        block body.footer
+          .b-footer
+            p footer
+
+        block body.js
+          if isDevelopment
+            script(src="http://localhost:35729/livereload.js")
+
+          script(src="http://yandex.st/jquery/1.9.1/jquery.min.js")
+          script window.jQuery || document.write("<script src=\"lib/jquery/jquery.min.js\"><\/script>")
+
+          script
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount','#{ga}'],['_trackPageview']);
+            (function(doc, w, script, c) {
+                var f = function () { fjs.parentNode.insertBefore(js, fjs); };
+                var js, fjs = doc.getElementsByTagName(script)[0],
+                    add = function(url, id) {
+                        if (doc.getElementById(id)) {return;}
+                        js = doc.createElement(script); js.src = url; js.async = true;
+                        id && (js.id = id);
+                        f();
+                    };
+
+                (w[c] = w[c] || []).push(function() {
+                    try { w.yaCounter#{metrika} = new Ya.Metrika({id:#{metrika}, enableAll: true, webvisor:true}); } catch(e) {}
+                });
+
+                add('publish/script.js', 'script-js');
+                // Google Analytics
+                add('//www.google-analytics.com/ga.js', 'ga');
+                // Yandex Metrika
+                add(("https:" == location.protocol ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js", 'ya-metrika');
+                // Google+ button
+                //add('https://apis.google.com/js/plusone.js');
+                // Facebook SDK
+                //add('//connect.facebook.net/en_US/all.js', 'facebook-jssdk');
+                // Twitter SDK
+                //add('//platform.twitter.com/widgets.js', 'twitter-wjs');
+            }(document, window, 'script', 'yandex_metrika_callbacks'));
+          noscript.
+            <div><img src="//mc.yandex.ru/watch/#{metrika}" style="position:absolute; left:-9999px;" alt="" /></div>

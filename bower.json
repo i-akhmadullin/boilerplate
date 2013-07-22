@@ -1,0 +1,17 @@
+{
+  "name": "boilerplate",
+  "version": "0.0.1",
+  "dependencies": {
+    "jquery":        "~1.9.1",
+    "normalize-css": "~2.1.1",
+    "html5shiv":     "*"
+  },
+  "exportsOverride": {
+    "jquery": {
+      "": "jquery.min.js"
+    },
+    "html5shiv": {
+      "": "dist/html5shiv.js"
+    }
+  }
+}

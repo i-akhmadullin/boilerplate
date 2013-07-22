@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Главная страница</title>
+    <meta name="keywords" content="{FIXME}">
+    <meta name="description" content="{FIXME}">
+    <meta name="viewport" content="width=device-width">
+    <link rel="canonical" href="{FIXME}">
+    <link rel="stylesheet" href="publish/style.css"><!--[if lt IE 9]>
+    <link rel="stylesheet" href="publish/style.ie.css"><![endif]--><!--[if lt IE 9]>
+    <script src="lib/html5shiv/html5shiv.js"></script><![endif]-->
+  </head>
+  <body>
+    <div class="b-header">
+      <p>header - main.html</p>
+    </div>
+    <div class="b-content"><a href="http://www.facebook.com/pages/Ekaterinburg-Russia/JetStyle/120197091372101?v=wall" class="b-content__social__item_facebook"></a><a href="http://github.com/jetstyle/" class="b-content__social__item_github"></a><a href="http://twitter.com/jetstyle_" class="b-content__social__item_twitter"></a><br><a href="#" class="b-button">Кнопка</a><br><br><a class="b-button b-button__primary">Просто кнопка</a></div>
+    <div class="b-footer">
+      <p>footer</p>
+    </div>
+    <script src="http://localhost:35729/livereload.js"></script>
+    <script src="http://yandex.st/jquery/1.9.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write("<script src=\"lib/jquery/jquery.min.js\"><\/script>")</script>
+    <script>
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount','UA-XXXXX-X'],['_trackPageview']);
+      (function(doc, w, script, c) {
+          var f = function () { fjs.parentNode.insertBefore(js, fjs); };
+          var js, fjs = doc.getElementsByTagName(script)[0],
+              add = function(url, id) {
+                  if (doc.getElementById(id)) {return;}
+                  js = doc.createElement(script); js.src = url; js.async = true;
+                  id && (js.id = id);
+                  f();
+              };
+              
+          (w[c] = w[c] || []).push(function() {
+              try { w.yaCounterXXXXXXX = new Ya.Metrika({id:XXXXXXX, enableAll: true, webvisor:true}); } catch(e) {}
+          });
+          
+          add('publish/script.js', 'script-js');
+          // Google Analytics
+          add('//www.google-analytics.com/ga.js', 'ga');
+          // Yandex Metrika
+          add(("https:" == location.protocol ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js", 'ya-metrika');
+          // Google+ button
+          //add('https://apis.google.com/js/plusone.js');
+          // Facebook SDK
+          //add('//connect.facebook.net/en_US/all.js', 'facebook-jssdk');
+          // Twitter SDK
+          //add('//platform.twitter.com/widgets.js', 'twitter-wjs');
+      }(document, window, 'script', 'yandex_metrika_callbacks'));
+    </script>
+    <noscript><div><img src="//mc.yandex.ru/watch/XXXXXXX" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+  </body>
+</html>

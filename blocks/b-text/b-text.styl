@@ -1,0 +1,205 @@
+/* stylus config */
+
+$textBottomMargin     = ($verticalRythmBase/2);
+
+$textHeaderFontFamily = $baseFontFamily;
+$textHeaderFontWeight = normal;
+$textHeaderColor      = $baseTextColor;
+$textHeaderLinkColor  = inherit;
+$textHeaderLinkStyle  = none;
+
+$textH1FontFamily = $textHeaderFontFamily;
+$textH1FontSize   = 48px;
+$textH1LineHeight = 70px;
+$textH1FontWeight = $textHeaderFontWeight;
+$textH1Color      = $textHeaderColor;
+
+$textH2FontFamily = $textHeaderFontFamily;
+$textH2FontSize   = 36px;
+$textH2LineHeight = $verticalRythmBase*1.5;
+$textH2FontWeight = bold;
+$textH2Color      = $textHeaderColor;
+
+$textH3FontFamily = $textHeaderFontFamily;
+$textH3FontSize   = 24px;
+$textH3LineHeight = $verticalRythmBase;
+$textH3FontWeight = $textHeaderFontWeight;
+$textH3Color      = #c00;
+
+$textH4FontFamily = $textHeaderFontFamily;
+$textH4FontSize   = 18px;
+$textH4LineHeight = $verticalRythmBase;
+$textH4FontWeight = bold;
+$textH4Color      = $textHeaderColor;
+
+$textH5FontFamily = $textHeaderFontFamily;
+$textH5FontSize   = 16px;
+$textH5LineHeight = $verticalRythmBase;
+$textH5FontWeight = $textHeaderFontWeight;
+$textH5Color      = $textHeaderColor;
+
+$textH6FontFamily = $textHeaderFontFamily;
+$textH6FontSize   = 16px;
+$textH6LineHeight = $verticalRythmBase;
+$textH6FontWeight = $textHeaderFontWeight;
+$textH6Color      = $textHeaderColor;
+
+$textTableCellPadding = 0 5px;
+$textTableFontSize    = 13px;
+$textTableBorder      = 1px solid #ccc;
+$textTableHeaderBG    = #eee;
+
+/* text styles */
+
+.b-text
+
+    & p,
+    &-p
+        margin-bottom: $textBottomMargin;
+        font-family: $baseFontFamily;
+        font-size: $baseFontSize;
+        line-height: $verticalRythmBase;
+
+    // Headers
+
+    & h1, &-h1,
+    & h2, &-h2,
+    & h3, &-h3,
+    & h4, &-h4,
+    & h5, &-h5,
+    & h6, &-h6
+        text-rendering: optimizelegibility;
+        margin-top: $verticalRythmBase;
+        margin-bottom: $textBottomMargin;
+
+    & h1 a, &-h1 a,
+    & h2 a, &-h2 a,
+    & h3 a, &-h3 a,
+    & h4 a, &-h4 a,
+    & h5 a, &-h5 a,
+    & h6 a, &-h6 a
+        color: $textHeaderLinkColor;
+        text-decoration: $textHeaderLinkStyle;
+
+    & h1:first-child, &-h1:first-child,
+    & h2:first-child, &-h2:first-child,
+    & h3:first-child, &-h3:first-child,
+    & h4:first-child, &-h4:first-child,
+    & h5:first-child, &-h5:first-child,
+    & h6:first-child, &-h6:first-child
+        margin-top: 0;
+
+    & h1, &-h1
+        font: $textH1FontWeight $textH1FontSize/$textH1LineHeight $textH1FontFamily;
+        color: $textH1Color;
+        border-bottom: 2px solid #000;
+        margin-bottom: $verticalRythmBase;
+
+    & h2, &-h2
+        font: $textH2FontWeight $textH2FontSize/$textH2LineHeight $textH2FontFamily;
+        color: $textH2Color;
+
+    & h3, &-h3
+        font: $textH3FontWeight $textH3FontSize/$textH3LineHeight $textH3FontFamily;
+        color: $textH3Color;
+
+    & h4, &-h4
+        font: $textH4FontWeight $textH4FontSize/$textH4LineHeight $textH4FontFamily;
+        color: $textH4Color;
+
+    & h5, &-h5
+        font: $textH5FontWeight $textH5FontSize/$textH5LineHeight $textH5FontFamily;
+        color: $textH5Color;
+
+    & h6, &-h6
+        font: $textH6FontWeight $textH6FontSize/$textH6LineHeight $textH6FontFamily;
+        color: $textH6Color;
+
+
+    // Lists
+
+    & ul,
+    & ol
+        padding: 0;
+        margin: 0 0 $textBottomMargin $verticalRythmBase*1.5;
+
+    & ul ul,
+    & ul ol,
+    & ol ol,
+    & ol ul
+        margin-bottom: 0;
+
+    & ul
+        list-style: none;
+
+    & ul > li:before
+         content: '\2014\a0';
+         float: left;
+         margin-left: -1.25em;
+
+    & ol
+        list-style: decimal;
+
+    & li
+        line-height: $verticalRythmBase;
+
+    // Description Lists
+
+    & dl
+        margin-bottom: $textBottomMargin;
+
+    & dt,
+    & dd
+        line-height: $verticalRythmBase;
+
+    & dt
+        font-weight: bold;
+        line-height: $verticalRythmBase - 1; // fix jank Helvetica Neue font bug
+
+    & dd
+        margin-left: $verticalRythmBase;
+
+    // Emphasis
+
+    & abbr[title]
+        cursor: help;
+        border-bottom: 1px dotted;
+
+    & pre
+        padding: ($verticalRythmBase/2) $verticalRythmBase;
+        margin-bottom: $textBottomMargin;
+        border-left: 2px solid #c00;
+        background: #eee;
+        font-size: 14px;
+
+    & blockquote
+        padding: $verticalRythmBase;
+        margin-bottom: $textBottomMargin;
+        border-left: 5px solid #000;
+
+    & q:before {}
+    & q:after {}
+    & blockquote:before {}
+    & blockquote:after {}
+
+    & small
+        font-size: .85em;
+
+    & table
+        margin-bottom: $textBottomMargin;
+
+    & th,
+    & td
+        font-size: $textTableFontSize;
+        padding: $textTableCellPadding;
+        border: $textTableBorder;
+
+    & th
+        font-weight: bold;
+        background: $textTableHeaderBG;
+        text-align: left;
+
+    & address
+        display: block;
+        margin-bottom: $textBottomMargin;
+        line-height: $verticalRythmBase;

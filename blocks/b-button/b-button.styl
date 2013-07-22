@@ -1,0 +1,61 @@
+// 1.1 Classy Buttons
+//
+// Classy buttons are big clickable buttons,
+// great for form actions and primary page actions.
+// This is used extensively around the site.
+//
+// :hover - Buttons when hover
+// :disabled - Buttons when disabled
+// .disabled - The same as :disabled
+//
+// Examples:
+//    <button class="b-button b-button__{{modifier}}">Button (button.b-button)</button>
+//    <a href="#" class="b-button b-button__{{modifier}}">Button (a.b-button)</a>
+
+// 1.2 Primary Buttons
+//
+// Primary buttons are designed for the main form action,
+// use whenever creating something.
+//
+// :hover - Buttons when hover
+//
+// Examples:
+//     <button class="b-button b-button__primary b-button__{{modifier}}">Button (button.b-button__primary)</button>
+//     <a href="#" class="b-button b-button__primary b-button__{{modifier}}">Button (a.b-button__primary)</a>
+
+.b-button
+  display: inline-block;
+  padding: 8px 15px;
+  outline: 0;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #ddd #ddd #bbb;
+  border-radius: 3px;
+  background: #e5e5e5 linear-gradient(top, #f7f7f7, #e5e5e5);
+  color: #4c4c4c;
+  text-decoration: none;
+  text-shadow: 0 1px 0 white;
+  font: bold 12px/1 Arial, sans-serif;
+  cursor: pointer;
+
+  &:hover
+    color: #d64
+
+  &:active
+    position: relative;
+    top: 1px;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.4);
+
+  &:disabled, &.disabled
+    color: #999
+
+  &__primary
+    border-color: #74BB5A #74BB5A #509338;
+    background: #60B044 linear-gradient(top, #8ADD6D, #60B044);
+    color: white;
+    text-shadow: rgba(0, 0, 0, 0.4) 0px -1px 0px;
+
+    &:hover
+      border-color: #4A993E;
+      color: #4A993E;
+      text-shadow: rgba(255, 255, 255, 0.4) 0px 1px 0px;
