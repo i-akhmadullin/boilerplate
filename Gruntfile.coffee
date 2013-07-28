@@ -117,9 +117,6 @@ module.exports = (grunt) ->
           console: true
 
     watch:
-      options:
-        interrupt:  true
-
       scripts:
         options:
           livereload: false
@@ -162,6 +159,16 @@ module.exports = (grunt) ->
           'jade/**/*.jade'
         ]
         tasks: ['jade:develop']
+
+      images:
+        files: [
+          'blocks/**/*.png',
+          'blocks/**/*.jpg',
+          'blocks/**/*.jpeg',
+          'blocks/**/*.gif'
+        ]
+        tasks: ['copy:images']
+
 
     jade:
       options:
