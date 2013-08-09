@@ -97,10 +97,6 @@ module.exports = (grunt) ->
 
     jshint:
       files: [
-        'lib/consoleshiv.js',
-        'lib/**/*.js',
-        '!lib/jquery/*.js',
-        '!lib/html5shiv/*.js',
         'blocks/**/*.js'
       ]
       options:
