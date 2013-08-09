@@ -103,9 +103,9 @@ module.exports = (grunt) ->
         curly:    true
         eqeqeq:   true
         eqnull:   true
-        quotmark: true
+        # quotmark: true
         undef:    true
-        unused:   true
+        unused:   false
 
         browser:  true
         jquery:   true
@@ -120,7 +120,7 @@ module.exports = (grunt) ->
           'lib/**/*.js',
           'blocks/**/*.js'
         ]
-        tasks: ['jshint', 'concat']
+        tasks: ['concat']
 
       scripts_pub:
         options:
@@ -253,7 +253,7 @@ module.exports = (grunt) ->
         path: 'http://localhost:8000/main.html';
 
 
-  @registerTask( 'default',     [ 'jshint', 'concat', 'stylus:dev', 'stylus:dev_ie', 'jade:develop' ])
+  @registerTask( 'default',     [ 'concat', 'stylus:dev', 'stylus:dev_ie', 'jade:develop' ])
   @registerTask( 'livereload',  [ 'default', 'connect', 'open', 'watch' ])
 
   @registerTask( 'publish',     [ 'jshint', 'concat', 'uglify', 'stylus', 'jade:publish' ])
