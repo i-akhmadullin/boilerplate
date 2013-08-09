@@ -136,7 +136,6 @@ module.exports = (grunt) ->
         files: [
           'blocks/**/*.css',
           'blocks/**/*.styl',
-          'blocks/**/*.less'
         ]
         tasks: ['stylus:dev', 'stylus:dev_ie']
 
@@ -216,7 +215,6 @@ module.exports = (grunt) ->
             'lib/**/*.css',
             'blocks/b-*/**/*.css',
             'blocks/b-*/**/*.styl',
-            'blocks/b-*/**/*.less',
             '!blocks/i-*/'
           ]
 
@@ -230,7 +228,6 @@ module.exports = (grunt) ->
             'lib/**/*.css',
             'blocks/b-*/**/*.ie.css',
             'blocks/b-*/**/*.ie.styl',
-            'blocks/b-*/**/*.ie.less',
             '!blocks/i-*/'
           ]
 
