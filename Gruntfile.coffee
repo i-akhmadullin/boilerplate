@@ -5,6 +5,7 @@ module.exports = (grunt) ->
 
   @initConfig
 
+
     sprite:
       all:
         src:       ['blocks/**/*_sprite.png']     # Sprite files to read in
@@ -18,8 +19,10 @@ module.exports = (grunt) ->
           format: 'png'         # Format of the image (inferred from destImg' extension by default) (jpg, png)
           # quality: 90         # Quality of image (gm only)
 
+
     connect:
       uses_defaults: {}
+
 
     copy:
       images:
@@ -28,9 +31,17 @@ module.exports = (grunt) ->
           flatten: true
           cwd:     'blocks',
           src:     ['**/*.{png,jpg,jpeg,gif}', '!**/*_sprite.{png,jpg,jpeg,gif}']
-          dest:    'publish/'
-          filter:  'isFile'
+          dest:    'publish'
         }]
+      assets:
+        files: [{
+          expand:  true
+          flatten: true
+          cwd:     'blocks',
+          src:     '**/*.{ttf,eot,svg,woff}'
+          dest:    'publish'
+        }]
+
 
     clean:
       pubimages:
@@ -41,6 +52,7 @@ module.exports = (grunt) ->
           "publish/*.jpeg",
           "!publish/sprite.png"
         ]
+
 
     imagemin:
       options:
@@ -67,6 +79,7 @@ module.exports = (grunt) ->
           },
         ]
 
+
     bower:
       install:
         options:
@@ -77,10 +90,9 @@ module.exports = (grunt) ->
           cleanTargetDir: false
           cleanBowerDir:  true
 
+
     concat:
-      options:
-        separator: ';'
-      dist:
+      js:
         src: [
           'lib/consoleshiv.js',
           'lib/**/*.js',
@@ -90,10 +102,12 @@ module.exports = (grunt) ->
         ]
         dest: 'publish/script.js'
 
+
     uglify:
       dist:
         files:
-          '<%= concat.dist.dest %>': ['<%= concat.dist.dest %>']
+          '<%= concat.js.dest %>': ['<%= concat.js.dest %>']
+
 
     jshint:
       files: [
@@ -112,40 +126,33 @@ module.exports = (grunt) ->
         globals:
           console: true
 
+
     watch:
-      scripts:
+      options:
+        livereload: false
+        spawn:      false
+
+      publish:
         options:
-          livereload: false
+          livereload: true
+        files: [
+          'publish/script.js',
+          'publish/style.css'
+        ]
+
+      js:
         files: [
           'lib/**/*.js',
           'blocks/**/*.js'
         ]
-        tasks: ['concat']
-
-      scripts_pub:
-        options:
-          livereload: true
-          nospawn:    true
-        files: [
-          'publish/script.js',
-        ]
+        tasks: ['concat:js']
 
       css:
-        options:
-          livereload: false
         files: [
           'blocks/**/*.css',
           'blocks/**/*.styl',
         ]
         tasks: ['stylus:dev', 'stylus:dev_ie']
-
-      css_pub:
-        options:
-          livereload: true
-          nospawn:    true
-        files: [
-          'publish/style.css',
-        ]
 
       jade:
         options:
@@ -153,7 +160,7 @@ module.exports = (grunt) ->
         files: [
           'jade/**/*.jade'
         ]
-        tasks: ['jade:develop']
+        tasks: ['jade:dev']
 
       images:
         files: [
@@ -169,7 +176,7 @@ module.exports = (grunt) ->
       options:
         pretty:  true
 
-      develop:
+      dev:
         options:
           data:
             ga:      'UA-XXXXX-X'
@@ -178,7 +185,7 @@ module.exports = (grunt) ->
         files: [{
           expand: true       # Enable dynamic expansion.
           cwd:    'jade'     # Src matches are relative to this path.
-          src:    ['*.jade'] # Actual pattern(s) to match.
+          src:    '*.jade'   # Actual pattern(s) to match.
           dest:   ''         # Destination path prefix.
           ext:    '.html'    # Dest filepaths will have this extension.
         }]
@@ -186,10 +193,11 @@ module.exports = (grunt) ->
       publish:
         options:
           data:
-            ga:      '<%= jade.develop.options.data.ga %>'
-            metrika: '<%= jade.develop.options.data.metrika %>'
+            ga:      '<%= jade.dev.options.data.ga %>'
+            metrika: '<%= jade.dev.options.data.metrika %>'
             isDevelopment: false
-        files: '<%= jade.develop.files %>'
+        files: '<%= jade.dev.files %>'
+
 
     stylus:
       options:
@@ -245,15 +253,16 @@ module.exports = (grunt) ->
           'publish/style.ie.css': 'publish/style.ie.css'
         # base64: true
 
+
     open:
       mainpage:
         path: 'http://localhost:8000/main.html';
 
 
-  @registerTask( 'default',     [ 'concat', 'stylus:dev', 'stylus:dev_ie', 'jade:develop' ])
-  @registerTask( 'livereload',  [ 'default', 'connect', 'open', 'watch' ])
+  @registerTask( 'default',    [ 'concat:js', 'stylus:dev', 'stylus:dev_ie', 'jade:dev' ])
+  @registerTask( 'livereload', [ 'default', 'connect', 'open', 'watch' ])
 
-  @registerTask( 'publish',     [ 'jshint', 'concat', 'uglify', 'stylus', 'jade:publish' ])
+  @registerTask( 'publish',    [ 'jshint', 'concat:js', 'uglify', 'stylus', 'jade:publish' ])
 
   # copy images from /blocks to /publish and then compress them
   @registerTask( 'publish_img', [ 'clean', 'copy', 'imagemin' ])
