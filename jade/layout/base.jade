@@ -44,7 +44,7 @@ html(lang="ru")
           script(src="http://yandex.st/jquery/1.9.1/jquery.min.js")
           script window.jQuery || document.write("<script src=\"lib/jquery/jquery.min.js\"><\/script>")
 
-          script
+          script.
             var _gaq = _gaq || [];
             _gaq.push(['_setAccount','#{ga}'],['_trackPageview']);
             (function(doc, w, script, c) {
@@ -62,16 +62,11 @@ html(lang="ru")
                 });
 
                 add('publish/script.js', 'script-js');
-                // Google Analytics
                 add('//www.google-analytics.com/ga.js', 'ga');
-                // Yandex Metrika
                 add(("https:" == location.protocol ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js", 'ya-metrika');
-                // Google+ button
-                //add('https://apis.google.com/js/plusone.js');
-                // Facebook SDK
-                //add('//connect.facebook.net/en_US/all.js', 'facebook-jssdk');
-                // Twitter SDK
-                //add('//platform.twitter.com/widgets.js', 'twitter-wjs');
+                //add('https://apis.google.com/js/plusone.js'); // Google+ button
+                //add('//connect.facebook.net/en_US/all.js', 'facebook-jssdk'); // Facebook SDK
+                //add('//platform.twitter.com/widgets.js', 'twitter-wjs'); // Twitter SDK
             }(document, window, 'script', 'yandex_metrika_callbacks'));
           noscript.
             <div><img src="//mc.yandex.ru/watch/#{metrika}" style="position:absolute; left:-9999px;" alt="" /></div>
