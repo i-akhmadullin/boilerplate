@@ -1,6 +1,6 @@
 {
   "name": "boilerplate",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "dependencies": {
     "jquery":        "1.9.1",
     "normalize-css": "2.1.1",

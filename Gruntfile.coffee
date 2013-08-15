@@ -1,6 +1,5 @@
 module.exports = (grunt) ->
   'use strict'
-
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
   @initConfig
@@ -58,10 +57,7 @@ module.exports = (grunt) ->
     clean:
       pubimages:
         src: [
-          "publish/*.png",
-          "publish/*.gif",
-          "publish/*.jpg",
-          "publish/*.jpeg",
+          "publish/*.{png,gif,jpg,jpeg}",
           "!publish/sprite.png"
         ]
 
@@ -114,6 +110,25 @@ module.exports = (grunt) ->
         ]
         dest: 'publish/script.js'
 
+      css:
+        src: [
+          'lib/normalize-css/normalize.css',
+          'blocks/i-reset/i-reset.css',
+          'lib/**/*!(.ie).css',
+          'blocks/b-*/**/*.css',
+          '!blocks/i-*/'
+        ]
+        dest: 'publish/style.css'
+
+      css_ie:
+        src: [
+          'blocks/i-reset/i-reset.ie.css',
+          'lib/**/*.ie.css',
+          'blocks/b-*/**/*.ie.css',
+          '!blocks/i-*/'
+        ]
+        dest: 'publish/style.ie.css'
+
 
     uglify:
       dist:
@@ -144,27 +159,24 @@ module.exports = (grunt) ->
         livereload: false
         spawn:      false
 
-      publish:
+      stylus:
         options:
           livereload: true
         files: [
-          'publish/script.js',
-          'publish/style.css'
-        ]
-
-      js:
-        files: [
-          'lib/**/*.js',
-          'blocks/**/*.js'
-        ]
-        tasks: ['concat:js']
-
-      css:
-        files: [
-          'blocks/**/*.css',
           'blocks/**/*.styl',
         ]
-        tasks: ['stylus:dev', 'stylus:dev_ie']
+        tasks: ['stylus:dev', 'stylus:dev_ie', 'concat:css', 'concat:css_ie']
+
+      js:
+        options:
+          livereload: true
+          spawn:      true
+        files: [
+          'lib/**/*.js',
+          'blocks/**/*.js',
+          'Gruntfile.coffee'  # auto reload gruntfile config
+        ]
+        tasks: ['concat:js']
 
       jade:
         options:
@@ -176,10 +188,7 @@ module.exports = (grunt) ->
 
       images:
         files: [
-          'blocks/**/*.png',
-          'blocks/**/*.jpg',
-          'blocks/**/*.jpeg',
-          'blocks/**/*.gif'
+          'blocks/**/*.{png,jpg,jpeg,gif}'
         ]
         tasks: ['copy:images']
 
@@ -225,31 +234,30 @@ module.exports = (grunt) ->
         ]
 
       dev:
-        options:
-          define:
-            ie: false
-        files:
-          'publish/style.css': [
-            'lib/normalize-css/normalize.css',
-            'blocks/i-reset/i-reset.styl',
-            'lib/**/*.css',
-            'blocks/b-*/**/*.css',
-            'blocks/b-*/**/*.styl',
-            '!blocks/i-*/'
-          ]
+        expand: true     # Enable dynamic expansion.
+        cwd:    'blocks' # Src matches are relative to this path.
+        src:    [
+          'i-reset/i-reset.styl',
+          'b-*/**/*.styl',
+          '!i-*/'
+        ]
+        dest:   'blocks' # Destination path prefix.
+        ext:    '.css'   # Dest filepaths will have this extension.
 
       dev_ie:
         options:
           define:
             ie: true
-        files:
-          'publish/style.ie.css': [
-            'blocks/i-reset/i-reset.styl',
-            'lib/**/*.css',
-            'blocks/b-*/**/*.ie.css',
-            'blocks/b-*/**/*.ie.styl',
-            '!blocks/i-*/'
-          ]
+
+        expand: true     # Enable dynamic expansion.
+        cwd:    'blocks' # Src matches are relative to this path.
+        src: [
+          'i-reset/i-reset.styl',
+          'b-*/**/*.ie.styl',
+          '!i-*/'
+        ]
+        dest:   'blocks' # Destination path prefix.
+        ext:    '.ie.css'# Dest filepaths will have this extension.
 
       publish:
         options:
@@ -271,10 +279,19 @@ module.exports = (grunt) ->
         path: 'http://localhost:8000/main.html';
 
 
-  @registerTask( 'default',    [ 'concat:js', 'stylus:dev', 'stylus:dev_ie', 'jade:dev' ])
+  `grunt.event.on('watch', function(action, filepath) {
+    if (grunt.file.isMatch( grunt.config('watch.stylus.files'), filepath) ) {
+      filepath = filepath.replace(/\\/g, '/'); // win slashes
+      filepath = filepath.replace( grunt.config('stylus.dev.cwd')+'/', '' );
+      grunt.config( 'stylus.dev.src', filepath );
+      grunt.config( 'stylus.dev_ie.src', filepath );
+    }
+  });`
+
+  @registerTask( 'default',    [ 'concat:js', 'stylus:dev', 'stylus:dev_ie', 'concat:css', 'concat:css_ie', 'jade:dev' ])
   @registerTask( 'livereload', [ 'default', 'connect', 'open', 'watch' ])
 
-  @registerTask( 'publish',    [ 'jshint', 'concat:js', 'uglify', 'stylus', 'jade:publish' ])
+  @registerTask( 'publish',    [ 'jshint', 'concat:js', 'uglify', 'stylus:dev', 'stylus:dev_ie', 'concat:css', 'concat:css_ie', 'stylus:publish', 'stylus:publish_ie', 'jade:publish' ])
 
   # copy images from /blocks to /publish and then compress them
   @registerTask( 'publish_img', [ 'clean', 'copy', 'imagemin' ])
