@@ -170,7 +170,6 @@ module.exports = (grunt) ->
       js:
         options:
           livereload: true
-          spawn:      true
         files: [
           'lib/**/*.js',
           'blocks/**/*.js',
@@ -203,13 +202,11 @@ module.exports = (grunt) ->
             ga:      'UA-XXXXX-X'
             metrika: 'XXXXXXX'
             isDevelopment: true
-        files: [{
-          expand: true       # Enable dynamic expansion.
-          cwd:    'jade'     # Src matches are relative to this path.
-          src:    '*.jade'   # Actual pattern(s) to match.
-          dest:   ''         # Destination path prefix.
-          ext:    '.html'    # Dest filepaths will have this extension.
-        }]
+        expand: true       # Enable dynamic expansion.
+        cwd:    'jade/'    # Src matches are relative to this path.
+        src:    '*.jade'   # Actual pattern(s) to match.
+        dest:   ''         # Destination path prefix.
+        ext:    '.html'    # Dest filepaths will have this extension.
 
       publish:
         options:
@@ -230,34 +227,34 @@ module.exports = (grunt) ->
           'i-mixins/i-mixins__vendor.styl',
           'i-mixins/i-mixins__gradients.styl',
           'i-mixins/i-mixins__if-ie.styl',
-          'sprite_positions.styl',
+          'sprite_positions.styl'
         ]
 
       dev:
-        expand: true     # Enable dynamic expansion.
-        cwd:    'blocks' # Src matches are relative to this path.
+        expand: true
+        cwd:    'blocks/'
         src:    [
           'i-reset/i-reset.styl',
           'b-*/**/*.styl',
           '!i-*/'
         ]
-        dest:   'blocks' # Destination path prefix.
-        ext:    '.css'   # Dest filepaths will have this extension.
+        dest:   'blocks'
+        ext:    '.css'
 
       dev_ie:
         options:
           define:
             ie: true
 
-        expand: true     # Enable dynamic expansion.
-        cwd:    'blocks' # Src matches are relative to this path.
+        expand: true
+        cwd:    'blocks/'
         src: [
           'i-reset/i-reset.styl',
           'b-*/**/*.ie.styl',
           '!i-*/'
         ]
-        dest:   'blocks' # Destination path prefix.
-        ext:    '.ie.css'# Dest filepaths will have this extension.
+        dest:   'blocks'
+        ext:    '.ie.css'
 
       publish:
         options:
@@ -279,14 +276,16 @@ module.exports = (grunt) ->
         path: 'http://localhost:8000/main.html';
 
 
-  `grunt.event.on('watch', function(action, filepath) {
-    if (grunt.file.isMatch( grunt.config('watch.stylus.files'), filepath) ) {
-      filepath = filepath.replace(/\\/g, '/'); // win slashes
-      filepath = filepath.replace( grunt.config('stylus.dev.cwd')+'/', '' );
+  @event.on 'watch', (action, filepath) ->
+    filepath = filepath.replace(/\\/g, '/'); # windows
+    if grunt.file.isMatch( grunt.config('watch.stylus.files'), filepath)
+      filepath = filepath.replace( grunt.config('stylus.dev.cwd'), '' );
       grunt.config( 'stylus.dev.src', filepath );
       grunt.config( 'stylus.dev_ie.src', filepath );
-    }
-  });`
+    if grunt.file.isMatch( grunt.config('watch.jade.files'), filepath)
+      filepath = filepath.replace( grunt.config('jade.dev.cwd'), '' );
+      grunt.config( 'jade.dev.src', filepath );
+
 
   @registerTask( 'default',    [ 'concat:js', 'stylus:dev', 'stylus:dev_ie', 'concat:css', 'concat:css_ie', 'jade:dev' ])
   @registerTask( 'livereload', [ 'default', 'connect', 'open', 'watch' ])
