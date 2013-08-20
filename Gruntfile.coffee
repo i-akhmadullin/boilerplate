@@ -21,7 +21,19 @@ module.exports = (grunt) ->
 
 
     connect:
-      uses_defaults: {}
+      server:
+        options:
+          port: 8000,
+          base: ''
+          middleware: (connect, options) ->
+            return [
+              # Serve static files.
+              connect.static(options.base)
+              # Show only html files and folders.
+              connect.directory(options.base, { hidden:false, icons:true, filter:(file) ->
+                return /\.html/.test(file) || !/\./.test(file);
+              })
+            ]
 
 
     copy:
