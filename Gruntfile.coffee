@@ -114,8 +114,10 @@ module.exports = (grunt) ->
         src: [
           'lib/normalize-css/normalize.css',
           'blocks/i-reset/i-reset.css',
-          'lib/**/*!(.ie).css',
+          'lib/**/*.css',
+          '!lib/**/*.ie.css',
           'blocks/b-*/**/*.css',
+          '!blocks/b-*/**/*.ie.css',
           '!blocks/i-*/'
         ]
         dest: 'publish/style.css'
@@ -164,8 +166,17 @@ module.exports = (grunt) ->
           livereload: true
         files: [
           'blocks/**/*.styl',
+          '!blocks/**/*.ie.styl'
         ]
-        tasks: ['stylus:dev', 'stylus:dev_ie', 'concat:css', 'concat:css_ie']
+        tasks: ['stylus:dev', 'concat:css']
+
+      stylus_ie:
+        options:
+          livereload: true
+        files: [
+          'blocks/**/*.ie.styl',
+        ]
+        tasks: ['stylus:dev_ie', 'concat:css_ie']
 
       js:
         options:
@@ -236,7 +247,7 @@ module.exports = (grunt) ->
         src:    [
           'i-reset/i-reset.styl',
           'b-*/**/*.styl',
-          '!i-*/'
+          '!b-*/**/*.ie.styl',
         ]
         dest:   'blocks'
         ext:    '.css'
@@ -245,13 +256,11 @@ module.exports = (grunt) ->
         options:
           define:
             ie: true
-
         expand: true
         cwd:    'blocks/'
         src: [
           'i-reset/i-reset.styl',
           'b-*/**/*.ie.styl',
-          '!i-*/'
         ]
         dest:   'blocks'
         ext:    '.ie.css'
@@ -259,14 +268,14 @@ module.exports = (grunt) ->
       publish:
         options:
           compress: true
-        files: 
+        files:
           'publish/style.css': 'publish/style.css'
         # base64: true
 
       publish_ie:
         options:
           compress: true
-        files: 
+        files:
           'publish/style.ie.css': 'publish/style.ie.css'
         # base64: true
 
@@ -281,6 +290,8 @@ module.exports = (grunt) ->
     if grunt.file.isMatch( grunt.config('watch.stylus.files'), filepath)
       filepath = filepath.replace( grunt.config('stylus.dev.cwd'), '' );
       grunt.config( 'stylus.dev.src', filepath );
+    if grunt.file.isMatch( grunt.config('watch.stylus_ie.files'), filepath)
+      filepath = filepath.replace( grunt.config('stylus.dev_ie.cwd'), '' );
       grunt.config( 'stylus.dev_ie.src', filepath );
     if grunt.file.isMatch( grunt.config('watch.jade.files'), filepath)
       filepath = filepath.replace( grunt.config('jade.dev.cwd'), '' );
