@@ -290,12 +290,14 @@ module.exports = (grunt) ->
     if grunt.file.isMatch( grunt.config('watch.stylus.files'), filepath)
       filepath = filepath.replace( grunt.config('stylus.dev.cwd'), '' );
       grunt.config( 'stylus.dev.src', filepath );
-    if grunt.file.isMatch( grunt.config('watch.stylus_ie.files'), filepath)
+    else if grunt.file.isMatch( grunt.config('watch.stylus_ie.files'), filepath)
       filepath = filepath.replace( grunt.config('stylus.dev_ie.cwd'), '' );
       grunt.config( 'stylus.dev_ie.src', filepath );
-    if grunt.file.isMatch( grunt.config('watch.jade.files'), filepath)
+    else if grunt.file.isMatch( 'jade/*.jade', filepath)
       filepath = filepath.replace( grunt.config('jade.dev.cwd'), '' );
       grunt.config( 'jade.dev.src', filepath );
+    else if grunt.file.isMatch( 'jade/**/*.jade', filepath)
+      grunt.config( 'jade.dev.src', '*.jade' );
 
 
   @registerTask( 'default',    [ 'concat:js', 'stylus:dev', 'stylus:dev_ie', 'concat:css', 'concat:css_ie', 'jade:dev' ])
