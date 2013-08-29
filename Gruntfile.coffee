@@ -12,7 +12,7 @@ module.exports = (grunt) ->
         destCSS:   'blocks/sprite_positions.styl' # Stylus with variables under sprite names
         # imgPath:   'sprite.png' # OPTIONAL: Manual override for imgPath specified in CSS
         algorithm: 'top-down'   # top-down, left-right, diagonal, alt-diagonal, binary-tree [best packing]
-        engine:    'auto'       # OPTIONAL: Specify engine (auto, canvas, gm)
+        engine:    'phantomjs'  # OPTIONAL: Specify engine (auto, canvas, gm)
         cssFormat: 'stylus'     # OPTIONAL: Specify CSS format (inferred from destCSS' extension by default) (stylus, scss, sass, less, json)
         imgOpts:                # OPTIONAL: Specify img options
           format: 'png'         # Format of the image (inferred from destImg' extension by default) (jpg, png)
